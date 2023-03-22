@@ -86,6 +86,9 @@
     // set encrypt data or not
     connectCtx.encrypt_data = 0;
     
+    // create alike tcp channel
+    connectCtx.channel_type = KKP2P_TCP_CHANNEL;
+    
     // set connect timeout:ms
     connectCtx.timeout = 5000;
     
@@ -114,6 +117,7 @@
     [self performSelector:@selector(dismiss:) withObject:alert afterDelay:0.5];
     
     clientChannel->peer_id = [NSString stringWithUTF8String:channel.peer_id];
+    clientChannel->channel_type = channel.channel_type;
     clientChannel->transmit_mode = channel.transmit_mode;
     clientChannel->encrypt_data = channel.encrypt_data;
     clientChannel->channel_id = channel.channel_id;
