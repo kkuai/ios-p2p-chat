@@ -10,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
     int  transmit_mode;
     int  encrypt_data;
     uint32_t channel_id;
+    int is_ipv6_p2p;
+    int connect_desc;
     int fd;
 }
 

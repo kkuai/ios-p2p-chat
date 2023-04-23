@@ -121,10 +121,16 @@
     clientChannel->transmit_mode = channel.transmit_mode;
     clientChannel->encrypt_data = channel.encrypt_data;
     clientChannel->channel_id = channel.channel_id;
+    clientChannel->is_ipv6_p2p = channel.is_ipv6_p2p;
+    clientChannel->connect_desc = channel.connect_desc;
     clientChannel->fd = channel.fd;
     
     if (clientChannel->transmit_mode == 1) {
-        [_modeButton setTitle:@"p2p" forState:UIControlStateNormal];
+        if (clientChannel->is_ipv6_p2p==1) {
+            [_modeButton setTitle:@"p2p(ipv6)" forState:UIControlStateNormal];
+        } else {
+            [_modeButton setTitle:@"p2p(ipv4)" forState:UIControlStateNormal];
+        }
     } else {
         [_modeButton setTitle:@"relay" forState:UIControlStateNormal];
     }
@@ -159,9 +165,12 @@
             // success
             KKP2PChannel* channel = [[KKP2PChannel alloc] init];
             channel->peer_id = [NSString stringWithUTF8String:acceptChannel.peer_id];
+            channel->channel_type = acceptChannel.channel_type;
             channel->transmit_mode = acceptChannel.transmit_mode;
             channel->encrypt_data = acceptChannel.encrypt_data;
             channel->channel_id = acceptChannel.channel_id;
+            channel->is_ipv6_p2p = acceptChannel.is_ipv6_p2p;
+            channel->connect_desc = acceptChannel.connect_desc;
             channel->fd = acceptChannel.fd;
             [acceptChannelArray addObject:channel];
             NSLog(@"accept new channel,fd:%d,accept channel count:%lu,p2pEngine:%p",channel->fd,[acceptChannelArray count],p2pEngine);
@@ -262,7 +271,11 @@
             return;
         }
         if (channel->transmit_mode == 1) {
-            [_modeButton setTitle:@"p2p(accepted)" forState:UIControlStateNormal];
+            if (channel->is_ipv6_p2p == 1) {
+                [_modeButton setTitle:@"p2p(ipv6 accepted)" forState:UIControlStateNormal];
+            } else {
+                [_modeButton setTitle:@"p2p(ipv4 accepted)" forState:UIControlStateNormal];
+            }
         } else {
             [_modeButton setTitle:@"relay(accepted)" forState:UIControlStateNormal];
         }
