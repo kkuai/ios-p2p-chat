@@ -432,7 +432,7 @@
     
     sended += send;
     while(sended < expectLen) {
-        send =kkp2p_read(channel->fd, szBuff+sended, expectLen-sended, 5000);
+        send =kkp2p_write(channel->fd, szBuff+sended, expectLen-sended, 5000);
         if (send < 0) {
             return -1;
         }
