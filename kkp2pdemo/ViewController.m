@@ -99,8 +99,6 @@
     engineConf.login_domain = (char*)cString;
     engineConf.login_port = [_loginPort.text intValue];
     engineConf.lan_search_port = [_lanPort.text intValue];
-    engineConf.log_path = NULL;
-    engineConf.max_log_size = 1024*1024;
     
     // timeout is used to resolve login domain
     if (p2pEngine != NULL) {
